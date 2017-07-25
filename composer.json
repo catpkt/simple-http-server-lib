@@ -1,0 +1,22 @@
+{
+    "name": "root/simple-http-server-lib",
+    "description": "A simple HTTP server for other libs.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fenz",
+            "email": "uukoo@163.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "catpkt/encryptor": ">=0.0.1",
+        "symfony/http-foundation": "~3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "CatPKT\\HttpServer\\": "libs/"
+        }
+    }
+}
