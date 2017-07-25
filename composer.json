@@ -1,5 +1,5 @@
 {
-    "name": "root/simple-http-server-lib",
+    "name": "catpkt/simple-http-server-lib",
     "description": "A simple HTTP server for other libs.",
     "type": "library",
     "license": "MIT",
