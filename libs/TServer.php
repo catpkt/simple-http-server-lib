@@ -16,17 +16,24 @@ trait TServer
 	 * @access public
 	 *
 	 * @param  Request $request
-	 * @param  string $baseUrl
+	 * @param  string $basePath
 	 *
 	 * @return Response
 	 */
-	final public function handle( Request$request, string$baseUrl='/' ):Response
+	final public function handle( Request$request, string$basePath='/' ):Response
 	{
-		return new Response(
-			$this->getEncryptor()->encrypt(
-				$this->{'action'.$this->route( $request, $baseUrl )}( $request )
-			)
-		);
+		$response= $this->{'action'.$this->route( $request, $basePath )}( $request );
+
+		if(!( $response instanceof Response ))
+		{
+			$response= new Response(
+				$this->app->getEncryptor()->encrypt(
+					$response
+				)
+			);
+		}
+
+		return $response;
 	}
 
 	/**
@@ -35,13 +42,13 @@ trait TServer
 	 * @access private
 	 *
 	 * @param  Request $request
-	 * @param  string $baseUrl
+	 * @param  string $basePath
 	 *
-	 * @return Response
+	 * @return string
 	 */
-	private function route( Request$request, string$baseUrl='/' ):Response
+	private function route( Request$request, string$basePath='/' ):string
 	{
-		$path= trim( substr( $request->getPathInfo(), strlen( $baseUrl ) ), '/' )?:'/';
+		$path= '/'.trim( substr( $request->getPathInfo(), strlen( $basePath ) ), '/' );
 
 		return $this->getRoutes()[$request->getMethod().':'.$path];
 	}
